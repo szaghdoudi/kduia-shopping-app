@@ -8,7 +8,7 @@ export const AppReducer = (state, action) => {
             let updatedQty = false;
             state.expenses.map((expense)=>{
                 if(expense.name === action.payload.name){
-                    expense.quantity = expense.quantity + action.payload.quatity;
+                    expense.quantity = expense.quantity + action.payload.quantity;
                     updatedQty = true;
                 }
                 new_expenses.push(expense);
@@ -18,24 +18,28 @@ export const AppReducer = (state, action) => {
             action.type= 'DONE';
             return {
                 ...state
-            };
+            }
 
-            case 'RED_QUANTITY':
-                state.expenses.map((expense)=>{
-                    if(expense.name === action.payload.name){
-                        expense.quatity = expense.quantity - action.payload.quantity;
-                    }
-                    expense.quantity = expense.quantity < 0 ? 0 : expense.quantity;
-                    new_expenses.push(expense);
-                    return true; 
-                });
-                state.expenses = new_expenses;
-                action.type = "DONE";
-                return {
-                    ...state    
+        case 'RED_QUANTITY':
+                
+                
+            state.expenses.map((expense)=>{
+                if(expense.name === action.payload.name){
+                    expense.quantity = expense.quantity - action.payload.quantity;
+                    
                 }
+                expense.quantity = expense.quantity < 0 ? 0 : expense.quantity;
+                new_expenses.push(expense);
+                
+                return true; 
+            });
+            state.expenses = new_expenses;
+            action.type = 'DONE';
+            return {
+                ...state    
+            }
         
-            case 'DELETE_ITEM':
+        case 'DELETE_ITEM':
                 state.expenses.map((expense)=>{
                     if(expense.name === action.payload.name){
                         expense.quantity = 0;
@@ -49,14 +53,15 @@ export const AppReducer = (state, action) => {
                     ...state
                 }
             
-            case 'CHG_LOCATION':
-                action.type = "DONE";
-                state.Location = action.payload;
-                return {
-                    ...state
-                }
-            default:
-                return state;
+        case 'CHG_LOCATION':
+                
+            state.Location = action.payload;
+            action.type = "DONE";
+            return {
+                ...state
+            }
+        default:
+        return state;
     }
 };
 // 1. Sets the initial state when the app loads
@@ -68,7 +73,7 @@ const initialState = {
         { id: "Dinner set", name: 'Dinner set', quantity: 0, unitprice: 600 },
         { id: "Bags", name: 'Bags', quantity: 0, unitprice: 200 }
     ],
-    Locaion : '€'
+    Location : '€'
 };
 
 // 2. Creates the context this is the thing our components import and use to get the state
@@ -89,8 +94,9 @@ return (
         value={{
             expenses: state.expenses,
             CartValue: state.CartValue,
-            dispatch,
-            Location: state.Locaion
+            Location: state.Location,
+            dispatch
+           
         }}
     >
         {propos.children}

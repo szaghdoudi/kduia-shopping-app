@@ -22,7 +22,6 @@ const ExpenseItem = (props) => {
             <td>{props.name}</td>
             <td>{props.quantity}</td>
             <td>{Location}{parseInt(props.unitprice)}</td>
-            <td>{Location}{parseInt(props.unitprice)}</td>
             <td>{Location}{parseInt((props.quantity)*props.unitprice)}</td>
             <td><FaTimesCircle size='2.2em' color='red' onClick={handleDeleteItem}></FaTimesCircle></td>
 
